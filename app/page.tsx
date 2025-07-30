@@ -276,7 +276,7 @@ export default function Home() {
                             <p className="text-neutral-400 mb-4">Install via script:</p>
                             <div className="inline-block bg-neutral-900 border border-neutral-700 rounded-lg p-4">
                                 <code className="text-green-400 font-mono">
-                                    curl -fsSL https://raw.githubusercontent.com/zen-editor/zen-landing/main/install/i.sh | sh
+                                    curl -fsSL https://zen.thoq.dev/install | sh
                                 </code>
                             </div>
                         </div>
