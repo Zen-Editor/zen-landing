@@ -1,103 +1,312 @@
-import Image from "next/image";
+"use client";
+
+import {useState} from "react";
+import {Spotlight} from "@/components/ui/spotlight";
+import {GlowingEffect} from "@/components/ui/glowing-effect";
+import {
+    Navbar,
+    NavBody,
+    NavItems,
+    MobileNav,
+    MobileNavHeader,
+    MobileNavMenu,
+    MobileNavToggle,
+    NavbarLogo,
+    NavbarButton
+} from "@/components/ui/navbar";
+import {
+    IconCode,
+    IconDownload,
+    IconBrandGithub,
+    IconRocket,
+    IconTopologyRing3,
+    IconShield,
+    IconCpu,
+    IconAdjustmentsPlus
+} from "@tabler/icons-react";
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    const navItems = [
+        {name: "Features", link: "#features"},
+        {name: "Download", link: "#download"},
+        {name: "GitHub", link: "https://github.com/zen-editor/zen"}
+    ];
+
+    return (
+        <div className="relative min-h-screen bg-black overflow-hidden">
+            <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white"/>
+
+            <Navbar>
+                <NavBody>
+                    <NavbarLogo/>
+                    <NavItems items={navItems}/>
+                    <NavbarButton href="#download" variant="gradient">
+                        Download Zen
+                    </NavbarButton>
+                </NavBody>
+                <MobileNav>
+                    <MobileNavHeader>
+                        <NavbarLogo/>
+                        <MobileNavToggle
+                            isOpen={mobileMenuOpen}
+                            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                        />
+                    </MobileNavHeader>
+                    <MobileNavMenu
+                        isOpen={mobileMenuOpen}
+                        onClose={() => setMobileMenuOpen(false)}
+                    >
+                        {navItems.map((item, idx) => (
+                            <a
+                                key={idx}
+                                href={item.link}
+                                className="text-neutral-700 dark:text-neutral-200 hover:text-neutral-900 dark:hover:text-white transition-colors"
+                                onClick={() => setMobileMenuOpen(false)}
+                            >
+                                {item.name}
+                            </a>
+                        ))}
+                        <NavbarButton href="#download" variant="gradient" className="mt-4">
+                            Download Zen
+                        </NavbarButton>
+                    </MobileNavMenu>
+                </MobileNav>
+            </Navbar>
+
+            <main className="relative z-10">
+                <section className="min-h-screen flex items-center justify-center px-4 pt-32">
+                    <div className="max-w-6xl mx-auto text-center">
+                        <div className="relative mb-8">
+                            <div className="relative inline-block">
+                                <h1 className="text-6xl md:text-8xl font-bold text-white mb-6 tracking-tight">
+                                    <span
+                                        className="bg-gradient-to-r from-white via-neutral-200 to-neutral-400 bg-clip-text text-transparent">
+                                      Zen
+                                    </span>
+                                </h1>
+                            </div>
+                        </div>
+
+                        <p className="text-xl md:text-2xl text-neutral-300 mb-8 max-w-3xl mx-auto leading-relaxed">
+                            A blazingly fast, lightweight code editor built with Rust.<br/>
+                            No bloat, no forced AI features—just pure coding performance.
+                        </p>
+
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+                            <button
+                                className="group relative px-8 py-4 bg-white text-black font-semibold rounded-lg hover:bg-neutral-100 transition-all duration-200 flex items-center gap-2">
+                                <IconDownload size={20}/>
+                                Download Now
+                                <div className="absolute -inset-1">
+                                    <GlowingEffect
+                                        disabled={false}
+                                        className="rounded-lg"
+                                        blur={1}
+                                        spread={20}
+                                        proximity={50}
+                                    />
+                                </div>
+                            </button>
+
+                            <a
+                                href="https://github.com/zen-editor/zen"
+                                className="px-8 py-4 border border-neutral-600 text-white font-semibold rounded-lg hover:border-neutral-400 transition-all duration-200 flex items-center gap-2"
+                            >
+                                <IconBrandGithub size={20}/>
+                                View on GitHub
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="features" className="py-20 px-4">
+                    <div className="max-w-6xl mx-auto">
+                        <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-16">
+                            Built for Performance
+                        </h2>
+
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            <div className="relative group">
+                                <div
+                                    className="p-8 rounded-xl bg-neutral-900/50 border border-neutral-800 hover:border-neutral-600 transition-all duration-300">
+                                    <div className="mb-4">
+                                        <IconTopologyRing3 className="w-12 h-12 text-yellow-400" />
+                                    </div>
+                                    <h3 className="text-xl font-semibold text-white mb-3">Lightning Fast</h3>
+                                    <p className="text-neutral-400">
+                                        Start up instantly and edit large files without lag.
+                                    </p>
+                                </div>
+                                <div className="absolute -inset-px">
+                                    <GlowingEffect
+                                        disabled={false}
+                                        className="rounded-xl"
+                                        blur={0}
+                                        spread={15}
+                                        proximity={20}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="relative group">
+                                <div
+                                    className="p-8 rounded-xl bg-neutral-900/50 border border-neutral-800 hover:border-neutral-600 transition-all duration-300">
+                                    <div className="mb-4">
+                                        <IconRocket className="w-12 h-12 text-blue-400"/>
+                                    </div>
+                                    <h3 className="text-xl font-semibold text-white mb-3">Lightweight</h3>
+                                    <p className="text-neutral-400">
+                                        No unnecessary bloat or features you don&#39;t need.
+                                    </p>
+                                </div>
+                                <div className="absolute -inset-px">
+                                    <GlowingEffect
+                                        disabled={false}
+                                        className="rounded-xl"
+                                        blur={0}
+                                        spread={15}
+                                        proximity={20}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="relative group">
+                                <div
+                                    className="p-8 rounded-xl bg-neutral-900/50 border border-neutral-800 hover:border-neutral-600 transition-all duration-300">
+                                    <div className="mb-4">
+                                        <IconShield className="w-12 h-12 text-green-400"/>
+                                    </div>
+                                    <h3 className="text-xl font-semibold text-white mb-3">Open Source</h3>
+                                    <p className="text-neutral-400">
+                                        Fully open source. Contribute, customize, and make it your own.
+                                    </p>
+                                </div>
+                                <div className="absolute -inset-px">
+                                    <GlowingEffect
+                                        disabled={false}
+                                        className="rounded-xl"
+                                        blur={0}
+                                        spread={15}
+                                        proximity={20}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="relative group">
+                                <div
+                                    className="p-8 rounded-xl bg-neutral-900/50 border border-neutral-800 hover:border-neutral-600 transition-all duration-300">
+                                    <div className="mb-4">
+                                        <IconCpu className="w-12 h-12 text-purple-400"/>
+                                    </div>
+                                    <h3 className="text-xl font-semibold text-white mb-3">Rust Powered</h3>
+                                    <p className="text-neutral-400">
+                                        Built with modern Rust for memory safety, speed, and reliability you can count
+                                        on.
+                                    </p>
+                                </div>
+                                <div className="absolute -inset-px">
+                                    <GlowingEffect
+                                        disabled={false}
+                                        className="rounded-xl"
+                                        blur={0}
+                                        spread={15}
+                                        proximity={20}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="relative group">
+                                <div
+                                    className="p-8 rounded-xl bg-neutral-900/50 border border-neutral-800 hover:border-neutral-600 transition-all duration-300">
+                                    <div className="mb-4">
+                                        <IconCode className="w-12 h-12 text-red-400"/>
+                                    </div>
+                                    <h3 className="text-xl font-semibold text-white mb-3">No AI Bloat</h3>
+                                    <p className="text-neutral-400">
+                                        Just a clean, focused coding experience. No AI autocomplete or subscriptions.
+                                    </p>
+                                </div>
+                                <div className="absolute -inset-px">
+                                    <GlowingEffect
+                                        disabled={false}
+                                        className="rounded-xl"
+                                        blur={0}
+                                        spread={15}
+                                        proximity={20}
+                                    />
+                                </div>
+                            </div>
+                            <div className="relative group">
+                                <div
+                                    className="p-8 rounded-xl bg-neutral-900/50 border border-neutral-800 hover:border-neutral-600 transition-all duration-300">
+                                    <div className="mb-4">
+                                        <IconAdjustmentsPlus className="w-12 h-12 text-red-400"/>
+                                    </div>
+                                    <h3 className="text-xl font-semibold text-white mb-3">Zen</h3>
+                                    <p className="text-neutral-400">
+                                        Feeling overwhelmed? Annoyed at AI autocomplete? Zen is here to help.
+                                    </p>
+                                </div>
+                                <div className="absolute -inset-px">
+                                    <GlowingEffect
+                                        disabled={false}
+                                        className="rounded-xl"
+                                        blur={0}
+                                        spread={15}
+                                        proximity={20}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="download" className="py-20 px-4 bg-gradient-to-b from-transparent to-neutral-950/50">
+                    <div className="max-w-4xl mx-auto text-center">
+                        <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
+                            Ready to Experience Zen?
+                        </h2>
+                        <p className="text-xl text-neutral-300 mb-12">
+                            Make the switch to a faster, cleaner coding experience.
+                        </p>
+
+                        <div className="text-center">
+                            <p className="text-neutral-400 mb-4">Install via script:</p>
+                            <div className="inline-block bg-neutral-900 border border-neutral-700 rounded-lg p-4">
+                                <code className="text-green-400 font-mono">
+                                    curl -fsSL https://raw.githubusercontent.com/zen-editor/zen/main/install.sh | sh
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <footer className="relative z-10 py-12 px-4 border-t border-neutral-800">
+                <div className="max-w-6xl mx-auto">
+                    <div className="flex flex-col md:flex-row justify-between items-center">
+                        <div className="flex items-center space-x-2 mb-4 md:mb-0">
+                            <span className="font-bold text-white text-xl">Zen</span>
+                            <span className="text-neutral-400">Editor</span>
+                        </div>
+
+                        <div className="flex space-x-6">
+                            <a href="https://github.com/zen-editor/zen"
+                               className="text-neutral-400 hover:text-white transition-colors">
+                                GitHub
+                            </a>
+                        </div>
+                    </div>
+
+                    <div className="mt-8 pt-8 border-t border-neutral-800 text-center">
+                        <p className="text-neutral-400">
+                            © {new Date().getFullYear()} Zen Industries. Open source software built with {"<3"}️
+                        </p>
+                    </div>
+                </div>
+            </footer>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+    );
 }
